@@ -2,142 +2,189 @@
 <html lang="en">
 
 <head>
-      <!-- Required meta tags -->
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-      <!-- Bootstrap CSS -->
-      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-            integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        
+        <link rel="stylesheet" type="text/css" href="mystyle.css">
+    <script>
+        $('#my-id').on('click', funtion() {
+            var counter = $(this).find('.counter');
+            counter.html(counter.html() + 1);
+        });
+    </script>
 
-      <style type="text/css">
-            body {
-                  background: whitesmoke !important;
-            }
 
-      </style>
 </head>
 
 <body>
-      <nav class="navbar navbar-dark bg-primary">
-            <a href="oficiales.html" class="navbar-brand mb-0 h1">Artículos</a>
-            <button type="button" class="btn btn-outline-light">Iniciar Sesión</button>
-      </nav>
+    <nav class="navbar navbar-dark bg-primary">
+        <a href="/articulos/oficial" class="navbar-brand mb-0 h1">Artículos</a>
+        <button type="button" class="btn btn-outline-light">Iniciar Sesión</button>
+    </nav>
 
 
 
 
 
-      <main role="main" class="container">
+    <main role="main" class="container">
 
-            <div class="border border-primary my-5 bg-white rounded shadow ">
+        <div class="border border-primary my-5 bg-white rounded shadow ">
 
-                  <button onclick="history.back()" type="button" class="close float-left mt-2 ml-2 p-3"
-                        aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                  </button>
+            <button onclick="history.back()" type="button" class="close float-left mt-2 ml-2 p-3" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
 
-                  <div class="mx-5 my-4 pt-3 px-3 rounded ">
-                        <div class="container">
-                              <div class="row py-3">
-                                    <div class="col-8">
-                                          <p class="h3"> Nombre Artículo</p>
+            <div class="mx-5 my-4 pt-3 px-3 rounded ">
+                <div class="container">
+                    <div class="row py-3">
+                        <div class="col-8">
+                            <p class="h3"> {{articulo.0.nombre}}</p>
 
+                        </div>
+                        <div class="col float-right">
+                            {%if articulo.0.tipo == 3 %}
+                            <p class="h4 text-right py-3"> Aceptada</p>
+                            {%elif articulo.0.tipo == 4 %}
+                            <p class="h4 text-right py-3"> Rechazada</p>
+                            {%else%}
+                            <p class="h4 text-right " id="art{{articulo.0.idArticulo}}">Valoración: {{articulo.0.votos}}</p>
+                            {%endif%}
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <p class="text-justify"> {{articulo.0.articulo}}
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row my-3">
+                        {%if articulo.0.tipo == 3 or articulo.0.tipo == 4%}
+                        <div class="col">
+                            <button type="button" class="btn btn-secondary float-right">Realizar enmienda</button>
+                        </div>
+                        {%else%}
+                        <div class="col-8">
+                            <button type="button" id="Aart{{articulo.0.idArticulo}}"
+                                onclick="apoyar('art{{articulo.0.idArticulo}}')"
+                                class="btn btn-success  mr-2">Apoyar</button>
+                            <button type="button" id='Rart{{articulo.0.idArticulo}}'
+                                onclick="rechazar('art{{articulo.0.idArticulo}}')"
+                                class="btn btn-danger  mx-2">Rechazar</button>
+                        </div>
+                        <div class="col">
+                            <a class="btn btn-secondary float-right" data-toggle="collapse" href="#collapseComentar"
+                                role="button" aria-expanded="false" aria-controls="collapseComentar">
+                                Comentar
+                            </a>
+                        </div>
+                        {%endif%}
+                    </div>
+                    <div class="row mt-4">
+                        <div class="col">
+                            <div class="collapse  w-100" id="collapseComentar">
+
+                                <div class="input-group">
+                                    <textarea class="form-control" placeholder="Comentario"
+                                        aria-label="With textarea"></textarea>
+                                </div>
+                                <a class="btn btn-primary float-right my-3" data-toggle="collapse"
+                                    href="#collapseComentar" role="button" aria-expanded="false"
+                                    aria-controls="collapseComentar">
+                                    Aceptar
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row py-3 mt-3">
+                        <div class="col">
+                            {%if articulo.0.tipo == 3 or articulo.0.tipo == 4%}
+                            <p class="h4"> Enmiendas</p>
+
+                            {%else%}
+                            <p class="h4"> Comentarios</p>
+
+                            {%endif%}
+
+                        </div>
+                    </div>
+
+                    <div class="row ">
+                        <div class="col">
+                            {% for com in comentariosPadre%}
+                            <div class="border border-primary my-3 pt-3 px-3 rounded shadow-sm">
+
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-9">
+                                            <p class="h4"> Comentario #{{com.idComentario}}</p>
+                                            <p class="text-muted m-0"><em>"{{com.cita}}"</em></p>
+                                            <p class="text-muted "> {{com.texto}}</p>
+                                        </div>
+                                        <div class="col">
+                                            <div class="row float-right">
+                                                <p class="h4 text-right" id='com{{com.idComentario}}'>Valoración: {{com.votos}}</p>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="col float-right">
-                                          <p class="h4 text-right "> Puntuación</p>
+                                    <div class="row mb-3">
+                                        <div class="col-8">
+                                            <button type="button" id="Acom{{com.idComentario}}"
+                                                onclick="apoyar('com{{com.idComentario}}')"
+                                                class="btn btn-success  mr-2">Apoyar</button>
+                                            <button type="button" id="Rcom{{com.idComentario}}"
+                                                onclick="rechazar('com{{com.idComentario}}')"
+                                                class="btn btn-danger  mx-2">Rechazar</button>
+                                        </div>
+                                        <div class="col">
+                                            <div class="row float-right">
+                                                <button type="button" class="btn btn-secondary">Comentar</button>
+                                            </div>
+                                        </div>
                                     </div>
-
-                              </div>
-                              <div class="row">
-                                    <div class="col">
-                                          <p class="text-justify"> Explicación del articulo.
-                                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                                tempor
-                                                incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                                                quis
-                                                nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                                                consequat.
-                                                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
-                                                dolore
-                                                eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                                                proident, sunt
-                                                in culpa qui officia deserunt mollit anim id est laborum.
-                                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                                tempor
-                                                incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                                                quis
-                                                nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                                                consequat.
-                                                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
-                                                dolore
-                                                eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                                                proident, sunt
-                                                in culpa qui officia deserunt mollit anim id est laborum.
-                                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                                tempor
-                                                incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                                                quis
-                                                nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                                                consequat.
-                                                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
-                                                dolore
-                                                eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                                                proident, sunt
-                                                in culpa qui officia deserunt mollit anim id est laborum.
-                                          </p>
-                                    </div>
-                              </div>
-                              <div class="row my-3">
-                                    <div class="col-8">
-                                          <button type="button" class="btn btn-success  mr-2">Apoyar</button>
-                                          <button type="button" class="btn btn-danger  mx-2">Rechazar</button>
-                                    </div>
-                                    <div class="col">
-                                          <button type="button" class="btn btn-secondary float-right">Comentar</button>
-                                    </div>
-                              </div>
-                              <div class="row py-3 mt-3">
-                                    <div class="col">
-                                          <p class="h4"> Comentarios</p>
-                                    </div>
-                              </div>
-
-                              <div class="row ">
-                                    <div class="col">
-                                          <div class="border border-primary my-3 pt-3 px-3 rounded shadow-sm">
-                                                <div class="container">
-                                                      <div class="row">
-                                                            <div class="col-10">
-                                                                  <p class="h4"> Comentario #X</p>
-                                                                  <p class="text-muted m-0"><em>"Texto citado del
-                                                                              artículo"</em></p>
-                                                                  <p class="text-muted "> Descripción del
-                                                                        comentario</p>
-                                                            </div>
-                                                            <div class="col">
-                                                                  <div class="row float-right">
-                                                                        <p class="h4 text-right"> Puntuación</p>
-                                                                  </div>
-                                                            </div>
-                                                      </div>
-                                                      <div class="row mb-3">
-                                                            <div class="col-8">
-                                                                  <button type="button"
-                                                                        class="btn btn-success  mr-2">Apoyar</button>
-                                                                  <button type="button"
-                                                                        class="btn btn-danger  mx-2">Rechazar</button>
-                                                            </div>
-                                                            <div class="col">
-                                                                  <div class="row float-right">
-                                                                        <button type="button"
-                                                                              class="btn btn-secondary">Comentar</button>
-                                                                  </div>
-                                                            </div>
-                                                      </div>
-                                                      <div class="row pl-5 pr-0  pt-2 border-top">
-
-                                                            <div class="container">
+                                    <div class="row pl-5 pr-0  pt-2 border-top">
+                                        {% for comH in comentarios %}
+                                        {% if comH.idComentarioPadre == com.idComentario %}
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="col-10">
+                                                    <p class="h4"> Comentario #{{comH.idComentario}}</p>
+                                                    <p class="text-muted "> {{comH.texto}}</p>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="row float-right">
+                                                        <p class="h4 text-right" id='comH{{comH.idComentario}}'>
+                                                                Valoración: {{comH.votos}}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-8">
+                                                    <button type="button" id="AcomH{{comH.idComentario}}"
+                                                        onclick="apoyar('comH{{comH.idComentario}}')"
+                                                        class="btn btn-success  mr-2">Apoyar</button>
+                                                    <button type="button" id="RcomH{{comH.idComentario}}"
+                                                        onclick="rechazar('comH{{comH.idComentario}}')"
+                                                        class="btn btn-danger  mx-2">Rechazar</button>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="row float-right">
+                                                        <button type="button"
+                                                            class="btn btn-secondary">Comentar</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {%endif%}
+                                        {%endfor%}
+                                        <!-- <div class="container">
                                                                   <div class="row">
                                                                         <div class="col-10">
                                                                               <p class="h4"> Comentario #X</p>
@@ -270,13 +317,15 @@
                                                                   </div>
                                                                   <div class="row pl-5 pr-0">
                                                                   </div>
-                                                            </div>
-                                                      </div>
-                                                </div>
+                                                            </div> -->
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
 
-                                          </div>
 
-                                          <div class="border border-primary my-3 pt-3 px-3 rounded shadow-sm">
+
+                            <!-- <div class="border border-primary my-3 pt-3 px-3 rounded shadow-sm">
                                                 <div class="container">
                                                       <div class="row">
                                                             <div class="col-10">
@@ -313,27 +362,56 @@
                                                       <div class="row pl-5 pr-0">
                                                       </div>
                                                 </div>
-                                          </div>
-                                    </div>
-                              </div>
+                                          </div> -->
                         </div>
-                  </div>
+                    </div>
+                </div>
             </div>
-      </main>
+        </div>
+    </main>
 
 
 
-      <!-- Optional JavaScript -->
-      <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-      <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
-      </script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
-      </script>
-      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
-      </script>
+    <!-- Optional JavaScript -->
+    <script>
+        function apoyar(id) {
+            var puntuacion = document.getElementById(id);
+            var number = puntuacion.innerHTML;
+            if (document.getElementById("R" + id).disabled) {
+                number = +number + 2;
+            } else {
+                number++;
+            }
+            puntuacion.innerHTML = number;
+            document.getElementById("A" + id).disabled = true;
+            document.getElementById("R" + id).disabled = false;
+
+        }
+
+        function rechazar(id) {
+
+            var puntuacion = document.getElementById(id);
+            var number = puntuacion.innerHTML;
+            if (document.getElementById("A" + id).disabled) {
+                number = +number - 2;
+            } else {
+                number--;
+            }
+            puntuacion.innerHTML = number;
+            document.getElementById("R" + id).disabled = true;
+            document.getElementById("A" + id).disabled = false;
+        }
+    </script>
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+    </script>
 </body>
 
 </html>
