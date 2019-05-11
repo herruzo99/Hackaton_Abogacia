@@ -10,9 +10,12 @@
       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
             integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-            <style type="text/css">
-                  body { background: whitesmoke !important; } /* Adding !important forces the browser to overwrite the default style applied by Bootstrap */
-               </style>
+      <style type="text/css">
+            body {
+                  background: whitesmoke !important;
+            }
+
+      </style>
 </head>
 
 <body>
@@ -29,7 +32,8 @@
 
             <div class="border border-primary my-5 bg-white rounded shadow ">
 
-                  <button onclick="history.back()" type="button" class="close float-left mt-2 ml-2 p-3" aria-label="Close">
+                  <button onclick="history.back()" type="button" class="close float-left mt-2 ml-2 p-3"
+                        aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                   </button>
 
@@ -228,9 +232,43 @@
                                                                                           </div>
                                                                                     </div>
                                                                               </div>
-                                                                              <div class="row pl-5 pr-0">
+                                                                              <div
+                                                                                    class="row pl-5 pr-0 pt-2 border-top">
                                                                               </div>
                                                                         </div>
+                                                                  </div>
+                                                            </div>
+                                                            <div class="container">
+                                                                  <div class="row">
+                                                                        <div class="col-10">
+                                                                              <p class="h4"> Comentario #X
+                                                                              </p>
+                                                                              <p class="text-muted ">
+                                                                                    Descripción del
+                                                                                    comentario</p>
+                                                                        </div>
+                                                                        <div class="col">
+                                                                              <div class="row float-right">
+                                                                                    <p class="h4 text-right">
+                                                                                          Puntuación</p>
+                                                                              </div>
+                                                                        </div>
+                                                                  </div>
+                                                                  <div class="row mb-3">
+                                                                        <div class="col-8">
+                                                                              <button type="button"
+                                                                                    class="btn btn-success  mr-2">Apoyar</button>
+                                                                              <button type="button"
+                                                                                    class="btn btn-danger  mx-2">Rechazar</button>
+                                                                        </div>
+                                                                        <div class="col">
+                                                                              <div class="row float-right">
+                                                                                    <button type="button"
+                                                                                          class="btn btn-secondary">Comentar</button>
+                                                                              </div>
+                                                                        </div>
+                                                                  </div>
+                                                                  <div class="row pl-5 pr-0">
                                                                   </div>
                                                             </div>
                                                       </div>
