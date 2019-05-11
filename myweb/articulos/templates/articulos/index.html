@@ -10,8 +10,11 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-           <link rel="stylesheet" type="text/css" href="mystyle.css">
-
+        <style>
+                body {
+                    background-color: whitesmoke;
+                }
+            </style>
 </head>
 
 <body>
@@ -46,7 +49,7 @@
                             <p class="text-muted "> {{art.descripcion}}</p>
                         </div>
                         <div class="col">
-                            <p class="h4 text-right py-3">Valoración: {{art.votos}}</p>
+                            <p class="h4 text-right py-3">{{art.votos}}</p>
                         </div>
 
                     </div>
